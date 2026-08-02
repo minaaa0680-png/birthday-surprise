@@ -14,75 +14,101 @@ const music = document.getElementById("bgMusic");
 const nextButtons = document.querySelectorAll(".nextBtn");
 
 
-// Change screen function
-function showScreen(id){
+// Function to change pages
+function showScreen(screenId) {
 
-    screens.forEach(screen=>{
+    screens.forEach(screen => {
         screen.classList.remove("active");
     });
 
-    document.getElementById(id).classList.add("active");
+    document.getElementById(screenId).classList.add("active");
 
 }
 
 
+
 // Welcome button
-startBtn.addEventListener("click",()=>{
+startBtn.addEventListener("click", () => {
 
     showScreen("nameScreen");
 
 });
 
 
-// Name checking
-continueBtn.addEventListener("click",()=>{
-
-    let name = nameInput.value.trim().toLowerCase();
 
 
-    if(name === "ahmer"){
+// Name Entry
+
+continueBtn.addEventListener("click", () => {
+
+    const name = nameInput.value.trim().toLowerCase();
+
+
+    if (name === "ahmer") {
+
 
         searchText.innerHTML = "✨ Searching the stars...";
 
-        setTimeout(()=>{
+
+        setTimeout(() => {
 
             searchText.innerHTML = "🌟 One special soul found.";
 
-        },2000);
+        }, 2000);
 
 
-        setTimeout(()=>{
+
+        setTimeout(() => {
 
             welcomeName.innerHTML = "Welcome, Ahmer 💙";
 
             showScreen("giftScreen");
 
-        },3500);
+
+        }, 3500);
 
 
-    }
 
-    else{
+    } else {
+
 
         searchText.innerHTML =
         "The stars are still searching... ✨";
 
+
     }
 
 });
 
 
-// Open gift + start music
-giftBtn.addEventListener("click",()=>{
 
-    music.play();
+
+
+
+// Open Gift + Play Music
+
+giftBtn.addEventListener("click", () => {
+
+
+    music.play().catch(() => {
+
+        console.log("Music requires user interaction");
+
+    });
+
 
     showScreen("letter");
+
 
 });
 
 
-// Next chapter buttons
+
+
+
+
+
+// Next Chapters
 
 let chapters = [
     "reasons",
@@ -94,49 +120,75 @@ let chapters = [
 let currentChapter = 0;
 
 
-nextButtons.forEach(button=>{
 
-    button.addEventListener("click",()=>{
+nextButtons.forEach(button => {
 
-        showScreen(chapters[currentChapter]);
 
-        currentChapter++;
+    button.addEventListener("click", () => {
+
+
+        if(currentChapter < chapters.length){
+
+
+            showScreen(chapters[currentChapter]);
+
+
+            currentChapter++;
+
+
+        }
+
 
     });
+
 
 });
 
 
-// Create extra floating stars
+
+
+
+
+
+// Floating stars
 
 function createStar(){
 
+
     const star = document.createElement("div");
+
 
     star.className = "floating-star";
 
+
     star.innerHTML = "✦";
 
-    star.style.left =
-    Math.random()*100 + "%";
 
-    star.style.top =
-    Math.random()*100 + "%";
+    star.style.left = Math.random() * 100 + "%";
+
+
+    star.style.top = Math.random() * 100 + "%";
+
 
     star.style.animationDuration =
-    (3 + Math.random()*5) + "s";
+    (3 + Math.random() * 5) + "s";
+
 
 
     document.body.appendChild(star);
 
 
-    setTimeout(()=>{
+
+    setTimeout(() => {
 
         star.remove();
 
     },8000);
 
+
+
 }
 
 
-setInterval(createStar,800);
+
+setInterval(createStar,900);
